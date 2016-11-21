@@ -57,7 +57,7 @@ export class Js2WordCloud {
         }
 
         this._option = option
-        if(!option.list || option.list.length <= 0) {
+        if(this._dataEmpty()) {
             this._showMask('暂无数据')
         } else {
             this._wordcloud2 = WordCloud(this._canvas, option)
@@ -82,9 +82,11 @@ export class Js2WordCloud {
     }
 
     resize() {
-        this._canvas.width = this._container.clientWidth
-        this._canvas.height = this._container.clientHeight
-        this._wordcloud2 = WordCloud(this._canvas, this._option)
+        if(!this._dataEmpty()) {
+            this._canvas.width = this._container.clientWidth
+            this._canvas.height = this._container.clientHeight
+            this._wordcloud2 = WordCloud(this._canvas, this._option)
+        }
     }
 
     _init() {
@@ -123,6 +125,10 @@ export class Js2WordCloud {
             this._dataMask.innerHTML = info
             this._dataMask.style.display = 'block'
         }
+    }
+
+    _dataEmpty() {
+        return !this._option || !this._option.list || this._option.list.length <= 0
     }
 }
 

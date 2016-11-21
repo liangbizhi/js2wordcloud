@@ -127,7 +127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            this._option = option;
-	            if (!option.list || option.list.length <= 0) {
+	            if (this._dataEmpty()) {
 	                this._showMask('暂无数据');
 	            } else {
 	                this._wordcloud2 = WordCloud(this._canvas, option);
@@ -156,9 +156,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'resize',
 	        value: function resize() {
-	            this._canvas.width = this._container.clientWidth;
-	            this._canvas.height = this._container.clientHeight;
-	            this._wordcloud2 = WordCloud(this._canvas, this._option);
+	            if (!this._dataEmpty()) {
+	                this._canvas.width = this._container.clientWidth;
+	                this._canvas.height = this._container.clientHeight;
+	                this._wordcloud2 = WordCloud(this._canvas, this._option);
+	            }
 	        }
 	    }, {
 	        key: '_init',
@@ -199,6 +201,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._dataMask.innerHTML = info;
 	                this._dataMask.style.display = 'block';
 	            }
+	        }
+	    }, {
+	        key: '_dataEmpty',
+	        value: function _dataEmpty() {
+	            return !this._option || !this._option.list || this._option.list.length <= 0;
 	        }
 	    }]);
 
