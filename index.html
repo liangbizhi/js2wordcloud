@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+</head>
+<body>
+    <div id="container" style="height: 400px;"></div>
+    <script src="dist/js2wordcloud.js"></script>
+    <script>
+        var wc = new Js2WordCloud('container')
+        wc.showLoading()
+        setTimeout(function() {
+            wc.hideLoading()
+            wc.setOption({
+                tooltip: {
+                    show: true,
+                    formatter: function(item) {
+                        return item[0] + ': 价值¥' + item[1] + '<br>' + '词云图'
+                    }
+                },
+                list: [['谈笑风生', 100], ['谈笑风生', 80], ['谈笑风生', 60], ['谈笑风生', 40], ['谈笑风生', 20], ['谈笑风生', 10]],
+                color: '#15a4fa'
+            })
+        }, 2000)
+
+        window.onresize = function() { 
+            wc.resize()
+        }
+    </script>
+</body>
+</html>
