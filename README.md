@@ -1,6 +1,10 @@
 # js2wordcloud.js
 
 [![Build](https://img.shields.io/travis/liangbizhi/js2wordcloud.svg)](https://travis-ci.org/liangbizhi/js2wordcloud)
+[![Github Releases](https://img.shields.io/github/downloads/liangbizhi/js2wordcloud/latest/total.svg)]()
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+
+[![NPM](https://nodei.co/npm/js2wordcloud.png)](https://nodei.co/npm/js2wordcloud/)
 
 JavaScript生成词云图。基于[wordcloud2.js](https://github.com/timdream/wordcloud2.js)
 
@@ -64,5 +68,7 @@ npm install js2wordcloud --save
 
     隐藏loading
 
+## Licence
 
+MIT
 
