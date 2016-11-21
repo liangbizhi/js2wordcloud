@@ -20,7 +20,7 @@ npm install js2wordcloud --save
 
 ## Usage
 
-查看`index.html`，点击查看[demo]()
+查看`index.html`，点击查看[demo](http://liangbizhi.github.io/js2wordcloud)
 
 ## Features
 
