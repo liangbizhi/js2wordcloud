@@ -2,17 +2,19 @@
 
 JavaScript生成词云图。基于[wordcloud2.js](https://github.com/timdream/wordcloud2.js)
 
-由于baidu Echarts 2出现值较小，甚至值相同时会出现字符重叠的BUG；wordcloud2.js能较好解决这个问题，但某些功能仍未能满足项目需求，故在此进行二次封装。
+由于Baidu Echarts 2的词云图在设置值较小、值相同的词语时，会出现字符重叠的问题；而又在不能使用Ecahrts 3的情况下……
+
+wordcloud2.js能较好解决这个问题，但某些功能仍未能满足项目需求，故在此进行二次封装，做一些微小的工作。
 
 ## Installation
 
-简单地，可以通过`script`标签引入：
+* 通过`script`标签引入：
 
 ```html
 <script src="dist/js2wordcloud.js"></script>
 ```
 
-npm安装：
+* npm安装：
 
 ```bash
 npm install js2wordcloud --save
@@ -50,15 +52,15 @@ npm install js2wordcloud --save
 
 * setOption(options)
 
-options必须通过此API进行调用，才能显示词云
+    options必须通过此API进行调用，才能显示词云
 
 * showLoading()
 
-显示loading
+    显示loading
 
 * hideLoading()
 
-隐藏loading
+    隐藏loading
 
 
 
