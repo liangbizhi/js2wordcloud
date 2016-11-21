@@ -1,6 +1,5 @@
 var WordCloud = require('./wordcloud2')
 
-
 export class Js2WordCloud {
     constructor(element) {
         this._container = window.document.getElementById(element)
