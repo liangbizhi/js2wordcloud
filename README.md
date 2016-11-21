@@ -68,6 +68,10 @@ npm install js2wordcloud --save
 
     隐藏loading
 
+* resize()
+
+    当容器大小变化时，调用此方法进行重绘
+
 ## Licence
 
 MIT
