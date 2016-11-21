@@ -5,7 +5,7 @@ export class Js2WordCloud {
         this._container = window.document.getElementById(element)
         this._wrapper = null
         this._canvas = null
-        this._loadingMask = null
+        this._dataMask = null
         this._tooltip = null
 
         this._wordcloud2 = null
@@ -55,8 +55,13 @@ export class Js2WordCloud {
             }
             option.hover = hoverCb
         }
+
         this._option = option
-        this._wordcloud2 = WordCloud(this._canvas, option)
+        if(!option.list || option.list.length <= 0) {
+            this._showMask('暂无数据')
+        } else {
+            this._wordcloud2 = WordCloud(this._canvas, option)
+        }
     }
     /**
      * 事件绑定
@@ -67,13 +72,13 @@ export class Js2WordCloud {
     }
 
     showLoading() {
-        if(this._loadingMask) {
-            this._loadingMask.style.display = 'block'
-        }
+        this._showMask('正在加载...')   
     }
 
     hideLoading() {
-        this._wrapper && this._wrapper.removeChild(this._loadingMask)
+        if(this._dataMask) {
+            this._dataMask.style.display = 'none'
+        }
     }
 
     resize() {
@@ -92,25 +97,32 @@ export class Js2WordCloud {
         this._wrapper.style.width = '100%'
         this._wrapper.style.height = 'inherit'
 
-        this._loadingMask = window.document.createElement('div')
-        this._loadingMask.style.backgroundColor = '#eee'
-        this._loadingMask.height = 'inherit'
-        this._loadingMask.style.lineHeight = height + 'px'
-        this._loadingMask.style.textAlign = 'center'
-        this._loadingMask.style.color = '#888'
-        this._loadingMask.style.position = 'absolute'
-        this._loadingMask.style.left = '0'
-        this._loadingMask.style.right = '0'
-        this._loadingMask.innerHTML = '正在加载...'
-        this._loadingMask.display = 'none'
+        this._dataMask = window.document.createElement('div')
+        this._dataMask.style.backgroundColor = '#eee'
+        this._dataMask.height = 'inherit'
+        this._dataMask.style.lineHeight = height + 'px'
+        this._dataMask.style.textAlign = 'center'
+        this._dataMask.style.color = '#888'
+        this._dataMask.style.position = 'absolute'
+        this._dataMask.style.left = '0'
+        this._dataMask.style.right = '0'
+        this._dataMask.innerHTML = '正在加载...'
+        this._dataMask.display = 'none'
 
-        this._wrapper.appendChild(this._loadingMask)
+        this._wrapper.appendChild(this._dataMask)
         this._container.appendChild(this._wrapper)
 
         this._canvas = window.document.createElement('canvas')
         this._canvas.width = width
         this._canvas.height = height
         this._wrapper.appendChild(this._canvas)
+    }
+
+    _showMask(info) {
+        if(this._dataMask) {
+            this._dataMask.innerHTML = info
+            this._dataMask.style.display = 'block'
+        }
     }
 }
 

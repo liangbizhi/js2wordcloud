@@ -5,27 +5,43 @@
     <title>Demo</title>
 </head>
 <body>
+    <h1>一般</h1>
     <div id="container" style="height: 400px;"></div>
+    <h1>无数据</h1>
+    <div id="container1" style="height: 400px;"></div>
     <script src="dist/js2wordcloud.js"></script>
     <script>
+        var option = {
+            tooltip: {
+                show: true,
+                formatter: function(item) {
+                    return item[0] + ': 价值¥' + item[1] + '<br>' + '词云图'
+                }
+            },
+            list: [['谈笑风生', 100], ['谈笑风生', 80], ['谈笑风生', 60], ['谈笑风生', 40], ['谈笑风生', 20], ['谈笑风生', 10]],
+            color: '#15a4fa'
+        }
         var wc = new Js2WordCloud('container')
         wc.showLoading()
         setTimeout(function() {
             wc.hideLoading()
-            wc.setOption({
-                tooltip: {
-                    show: true,
-                    formatter: function(item) {
-                        return item[0] + ': 价值¥' + item[1] + '<br>' + '词云图'
-                    }
-                },
-                list: [['谈笑风生', 100], ['谈笑风生', 80], ['谈笑风生', 60], ['谈笑风生', 40], ['谈笑风生', 20], ['谈笑风生', 10]],
-                color: '#15a4fa'
-            })
+            wc.setOption(option)
+        }, 2000)
+
+        var option1 = {
+            list: [],
+            color: '#15a4fa'
+        }
+        var wc1 = new Js2WordCloud('container1')
+        wc1.showLoading()
+        setTimeout(function() {
+            wc1.hideLoading()
+            wc1.setOption(option1)
         }, 2000)
 
         window.onresize = function() { 
             wc.resize()
+            wc1.resize()
         }
     </script>
 </body>
