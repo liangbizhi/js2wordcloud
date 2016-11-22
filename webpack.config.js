@@ -39,8 +39,15 @@ var config = {
     ]
 }
 
-if (process.env.NODE_ENV === 'development') {
+if(process.env.NODE_ENV === 'development') {
     config.devtool = 'source-map'
+}
+
+if(process.env.NODE_ENV === 'production') {
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        compress: true
+    }))
+    config.output.filename = '[name].min.js'
 }
 
 module.exports = config

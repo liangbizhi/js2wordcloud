@@ -115,6 +115,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this._tooltip.style.fontSize = '14px';
 	                    this._tooltip.style.fontFamily = option.fontFamily;
 	                    this._tooltip.style.lineHeight = 1.4;
+	                    this._tooltip.style.webkitTransition = 'all 0.1s ease-out';
+	                    this._tooltip.style.mozTransition = 'all 0.1s ease-out';
 	                    this._tooltip.style.transition = 'all 0.1s ease-out';
 	                    this._tooltip.style.position = 'absolute';
 	                    this._tooltip.style.whiteSpace = 'nowrap';
@@ -1387,8 +1389,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./ball-spin-fade-loader.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./ball-spin-fade-loader.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./spin.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./spin.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});

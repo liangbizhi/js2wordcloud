@@ -1,5 +1,5 @@
 var WordCloud = require('./wordcloud2')
-var spinCss = require('./css/ball-spin-fade-loader.css')
+var spinCss = require('./css/spin.css')
 
 export class Js2WordCloud {
     constructor(element) {
@@ -45,6 +45,8 @@ export class Js2WordCloud {
                 this._tooltip.style.fontSize = '14px'
                 this._tooltip.style.fontFamily = option.fontFamily
                 this._tooltip.style.lineHeight = 1.4
+                this._tooltip.style.webkitTransition = 'all 0.1s ease-out'
+                this._tooltip.style.mozTransition = 'all 0.1s ease-out'
                 this._tooltip.style.transition = 'all 0.1s ease-out'
                 this._tooltip.style.position = 'absolute'
                 this._tooltip.style.whiteSpace = 'nowrap'
