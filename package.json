@@ -1,6 +1,6 @@
 {
   "name": "js2wordcloud",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "javascript词云，基于wordcloud2.js，增强特性",
   "main": "dist/js2wordcloud.js",
   "repository": {
