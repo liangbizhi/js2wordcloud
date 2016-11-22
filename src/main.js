@@ -1,8 +1,9 @@
 var WordCloud = require('./wordcloud2')
+var spinCss = require('./css/ball-spin-fade-loader.css')
 
 export class Js2WordCloud {
     constructor(element) {
-        this._container = window.document.getElementById(element)
+        this._container = element
         this._wrapper = null
         this._canvas = null
         this._dataMask = null
@@ -57,8 +58,21 @@ export class Js2WordCloud {
         }
 
         this._option = option
-        if(this._dataEmpty()) {
-            this._showMask('暂无数据')
+        if(this._dataEmpty() && option.noDataLoadingOption) {
+            var STYLE = ''
+            if(option.noDataLoadingOption.textStyle) {
+                if(typeof option.noDataLoadingOption.textStyle.color === 'string') {
+                    STYLE += ('color: ' + option.noDataLoadingOption.textStyle.color + ';') 
+                }
+                if(typeof option.noDataLoadingOption.textStyle.fontSize === 'number') {
+                    STYLE += ('font-size: ' + option.noDataLoadingOption.textStyle.fontSize + 'px;') 
+                }
+            }
+            if(typeof option.noDataLoadingOption.backgroundColor === 'string') {
+                this._wrapper.style.backgroundColor = option.noDataLoadingOption.backgroundColor
+            }
+            var TEXT = option.noDataLoadingOption.text || ''
+            this._showMask('<span class="__wc_loadding_text__" style="' + STYLE + '">' + TEXT + '</span>')
         } else {
             this._wordcloud2 = WordCloud(this._canvas, option)
         }
@@ -71,8 +85,35 @@ export class Js2WordCloud {
 
     }
 
-    showLoading() {
-        this._showMask('正在加载...')   
+    showLoading(loadingOption) {
+        var DEFAULT_LOADING_TEXT = '正在加载...'
+        var LOADING_TEXT_HTML_PRE = '<span class="__wc_loadding_text__">'
+        if (loadingOption) {
+            var LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">'
+            var LOADING_LOGO_HTML = '<div class="__wc_loading__">' +
+                                    '<div></div>' +
+                                    '<div></div>' +
+                                    '<div></div>' +
+                                    '<div></div>' +
+                                    '<div></div>' +
+                                    '<div></div>' +
+                                    '<div></div>' +
+                                    '<div></div>' +
+                                '</div>'
+            if(loadingOption.backgroundColor) {
+                this._dataMask.style.backgroundColor = loadingOption.backgroundColor
+            }
+            if(typeof loadingOption.text === 'string') {
+                LOADING_TEXT_HTML_PRE += (loadingOption.text + '</span>')
+            } else {
+                LOADING_TEXT_HTML_PRE += (DEFAULT_LOADING_TEXT + '</span>')
+            }
+            if(loadingOption.effect === 'spin') {
+                this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + LOADING_TEXT_HTML_PRE + '</div>')
+            }
+        } else {
+            this._showMask(LOADING_TEXT_HTML_PRE += (DEFAULT_LOADING_TEXT + '</span>'))
+        }
     }
 
     hideLoading() {
@@ -100,15 +141,14 @@ export class Js2WordCloud {
         this._wrapper.style.height = 'inherit'
 
         this._dataMask = window.document.createElement('div')
-        this._dataMask.style.backgroundColor = '#eee'
         this._dataMask.height = 'inherit'
         this._dataMask.style.lineHeight = height + 'px'
         this._dataMask.style.textAlign = 'center'
         this._dataMask.style.color = '#888'
+        this._dataMask.style.fontSize = '14px'
         this._dataMask.style.position = 'absolute'
         this._dataMask.style.left = '0'
         this._dataMask.style.right = '0'
-        this._dataMask.innerHTML = '正在加载...'
         this._dataMask.display = 'none'
 
         this._wrapper.appendChild(this._dataMask)
@@ -120,9 +160,9 @@ export class Js2WordCloud {
         this._wrapper.appendChild(this._canvas)
     }
 
-    _showMask(info) {
+    _showMask(innerHTML) {
         if(this._dataMask) {
-            this._dataMask.innerHTML = info
+            this._dataMask.innerHTML = innerHTML
             this._dataMask.style.display = 'block'
         }
     }

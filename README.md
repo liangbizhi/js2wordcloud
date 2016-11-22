@@ -28,7 +28,18 @@ npm install js2wordcloud --save
 
 ## Usage
 
-查看`index.html`，点击查看[demo](http://liangbizhi.github.io/js2wordcloud)
+```javascript
+var wc = new Js2WordCloud(document.getElementById('container'))
+wc.setOption({
+    tooltip: {
+        show: true
+    },
+    list: [['谈笑风生', 80], ['谈笑风生', 80], ['谈笑风生', 70], ['谈笑风生', 70], ['谈笑风生', 60], ['谈笑风生', 60]],
+    color: '#15a4fa'
+})
+```
+
+详细用法请看`index.html`。点击[demo](http://liangbizhi.github.io/js2wordcloud)
 
 ## Features
 
@@ -38,31 +49,47 @@ npm install js2wordcloud --save
 
 ## Document
 
-### Options
-
-在options原基础上增加：
-
-```javascript
-{
-    // ...
-    tooltip: {
-        show: true,                                 // 默认：false
-        formatter: function(item) {                 // 数据格式化函数，item为list的一项
-        }
-    }
-    // ...
-}
-```
-
 ### API
 
 * setOption(options)
 
-    options必须通过此API进行调用，才能显示词云
+    options必须通过此API进行设置，才能显示词云
 
-* showLoading()
+    在wordcloud2.js原options基础上增加：
 
-    显示loading
+    ```javascript
+    {
+        // ...
+        tooltip: {
+            show: true,                                 // 默认：false
+            formatter: function(item) {                 // 数据格式化函数，item为list的一项
+            }
+        },
+        noDataLoadingOption: {                          // 无数据提示。
+            backgroundColor: '#eee',
+            text: '暂无数据',
+            textStyle: {
+                color: '#888',
+                fontSize: 14
+            }
+        }
+        // ...
+    }
+    ```
+
+* showLoading([loadingOption])
+
+    过渡控制，显示loading（读取中）。可选。
+
+    `loadingOption`:
+
+    ```javascript
+    {
+        backgroundColor: '#eee',
+        text: '正在加载...',
+        effect: 'spin'                      // 默认：null, { String | Function } 可选：'spin|normal'；也可为回调函数，回调函数生成HTML
+    }
+    ```
 
 * hideLoading()
 

@@ -18,20 +18,31 @@
                     return item[0] + ': 价值¥' + item[1] + '<br>' + '词云图'
                 }
             },
-            list: [['谈笑风生', 100], ['谈笑风生', 80], ['谈笑风生', 60], ['谈笑风生', 40], ['谈笑风生', 20], ['谈笑风生', 10]],
+            list: [['谈笑风生', 50], ['谈笑风生', 50], ['谈笑风生', 40], ['谈笑风生', 40], ['谈笑风生', 30], ['谈笑风生', 30], ['谈笑风生', 20], ['谈笑风生', 20], ['谈笑风生', 20], ['谈笑风生', 20]],
             color: '#15a4fa'
         }
-        var wc = new Js2WordCloud('container')
-        wc.showLoading()
+        var wc = new Js2WordCloud(document.getElementById('container'))
+        wc.showLoading({
+            backgroundColor: '#fff',
+            effect: 'spin'
+        })
         setTimeout(function() {
             wc.hideLoading()
             wc.setOption(option)
         }, 2000)
         /////////////////
         var option1 = {
-            color: '#15a4fa'
+            color: '#15a4fa',
+            noDataLoadingOption: {
+                backgroundColor: '#eee',
+                text: '暂无数据',
+                textStyle: {
+                    color: '#f00',
+                    fontSize: 20
+                }
+            }
         }
-        var wc1 = new Js2WordCloud('container1')
+        var wc1 = new Js2WordCloud(document.getElementById('container1'))
         wc1.showLoading()
         setTimeout(function() {
             wc1.hideLoading()

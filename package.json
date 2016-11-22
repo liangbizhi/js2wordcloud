@@ -2,7 +2,7 @@
   "name": "js2wordcloud",
   "version": "1.0.1",
   "description": "javascript词云，基于wordcloud2.js，增强特性",
-  "main": "src/main.js",
+  "main": "dist/js2wordcloud.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/liangbizhi/js2wordcloud.git"
@@ -21,14 +21,15 @@
   ],
   "author": "liangbizhi",
   "license": "MIT",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
     "babel-preset-es2015": "^6.18.0",
+    "cross-env": "^3.1.3",
+    "css-loader": "^0.26.0",
     "imports-loader": "^0.6.5",
+    "style-loader": "^0.13.1",
     "webpack": "^1.13.3"
-  },
-  "devDependencies": {
-    "cross-env": "^3.1.3"
   }
 }

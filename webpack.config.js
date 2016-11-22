@@ -23,6 +23,10 @@ var config = {
             {
                 test: require.resolve('./src/wordcloud2.js'),
                 loader: 'imports?this=>window'
+            },
+            {
+                test: /.css$/,
+                loader: 'style!css'
             }
         ]
     },
