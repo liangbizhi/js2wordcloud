@@ -167,15 +167,20 @@ export class Js2WordCloud {
         option.maxFontSize = typeof option.maxFontSize === 'number' ? option.maxFontSize : 60
         option.minFontSize = typeof option.minFontSize === 'number' ? option.minFontSize : 12
         if(option.list && option.list.length > 0){
-            option.list.sort(function(a,b){
-                return b[1] - a[1]
-            })
-            var min = option.list[option.list.length - 1][1]
-            var max = option.list[0][1]
-
+            var min = option.list[0][1]
+            var max = 0
+            for(var i = 0, len = option.list.length; i < len; i++ ) {
+                if(min > option.list[i][1]) {
+                    min = option.list[i][1]
+                }
+                if(max < option.list[i][1]) {
+                    max = option.list[i][1]
+                }
+            }
+            
             //用y=ax^r+b公式确定字体大小
             if(max > min){
-                var r = 2
+                var r = typeof option.fontSizeFactor === 'number' ? option.fontSizeFactor : 1 / 10
                 var a = (option.maxFontSize - option.minFontSize) / (Math.pow(max, r) - Math.pow(min, r))
                 var b = option.maxFontSize - a * Math.pow(max, r)
                 // var x = (option.maxFontSize - option.minFontSize) / (1 - min / max)

@@ -62,6 +62,7 @@ wc.setOption({
     ```javascript
     {
         // ...
+        fontSizeFactor: 0.1,                            // 当词云值相差太大，可设置此值进字体行大小微调，默认0.1
         maxFontSize: 60,                                // 最大fontSize，用来控制weightFactor，默认60
         minFontSize: 12,                                // 最小fontSize，用来控制weightFactor，默认12
         tooltip: {
