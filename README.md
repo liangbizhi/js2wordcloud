@@ -17,7 +17,7 @@ wordcloud2.js能较好解决这个问题，但某些功能仍未能满足项目�
 * 通过`script`标签引入：
 
 ```html
-<script src="dist/js2wordcloud.js"></script>
+<script src="dist/js2wordcloud.min.js"></script>
 ```
 
 * npm安装：
@@ -45,7 +45,9 @@ wc.setOption({
 
 * 支持tooltip。包括tooltip的开关和数据格式化formatter；
 * 支持showLoading和hideLoading加载数据loading；
-* 支持resize。
+* 支持resize；
+* 当词云数值相差过大时，对字体大小范围进行约束。
+
 
 ## Document
 
@@ -60,6 +62,8 @@ wc.setOption({
     ```javascript
     {
         // ...
+        maxFontSize: 60,                                // 最大fontSize，用来控制weightFactor，默认60
+        minFontSize: 12,                                // 最小fontSize，用来控制weightFactor，默认12
         tooltip: {
             show: true,                                 // 默认：false
             formatter: function(item) {                 // 数据格式化函数，item为list的一项

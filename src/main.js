@@ -18,6 +18,7 @@ export class Js2WordCloud {
         var __originHoverCb = option.hover
         var self = this
         option.fontFamily = option.fontFamily || 'Microsoft YaHei,Helvetica,Times,serif'
+        self._fixWeightFactor(option)
         var hoverCb = function(item, dimension, event) {
             if(item) {
                 var html = item[0] + ': ' + item[1]
@@ -160,6 +161,36 @@ export class Js2WordCloud {
         this._canvas.width = width
         this._canvas.height = height
         this._wrapper.appendChild(this._canvas)
+    }
+
+    _fixWeightFactor(option) {
+        option.maxFontSize = typeof option.maxFontSize === 'number' ? option.maxFontSize : 60
+        option.minFontSize = typeof option.minFontSize === 'number' ? option.minFontSize : 12
+        if(option.list && option.list.length > 0){
+            option.list.sort(function(a,b){
+                return b[1] - a[1]
+            })
+            var min = option.list[option.list.length - 1][1]
+            var max = option.list[0][1]
+
+            //用y=ax^r+b公式确定字体大小
+            if(max > min){
+                var r = 2
+                var a = (option.maxFontSize - option.minFontSize) / (Math.pow(max, r) - Math.pow(min, r))
+                var b = option.maxFontSize - a * Math.pow(max, r)
+                // var x = (option.maxFontSize - option.minFontSize) / (1 - min / max)
+                // var y = option.maxFontSize - x
+                option.weightFactor = function (size) {
+                    return Math.ceil(a * Math.pow(size, r) + b)
+                    // var s = Math.ceil((size / max) * x + y)
+                    // return s
+                }
+            }else{
+                option.weightFactor = function (size) {
+                    return option.minFontSize
+                }
+            }
+        }
     }
 
     _showMask(innerHTML) {
