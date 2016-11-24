@@ -92,18 +92,18 @@ export class Js2WordCloud {
     showLoading(loadingOption) {
         var DEFAULT_LOADING_TEXT = '正在加载...'
         var LOADING_TEXT_HTML_PRE = '<span class="__wc_loadding_text__">'
+        var LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">'
+        var LOADING_LOGO_HTML = '<div class="__wc_loading__">' +
+                                '<div></div>' +
+                                '<div></div>' +
+                                '<div></div>' +
+                                '<div></div>' +
+                                '<div></div>' +
+                                '<div></div>' +
+                                '<div></div>' +
+                                '<div></div>' +
+                            '</div>'
         if (loadingOption) {
-            var LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">'
-            var LOADING_LOGO_HTML = '<div class="__wc_loading__">' +
-                                    '<div></div>' +
-                                    '<div></div>' +
-                                    '<div></div>' +
-                                    '<div></div>' +
-                                    '<div></div>' +
-                                    '<div></div>' +
-                                    '<div></div>' +
-                                    '<div></div>' +
-                                '</div>'
             if(loadingOption.backgroundColor) {
                 this._dataMask.style.backgroundColor = loadingOption.backgroundColor
             }
@@ -118,6 +118,7 @@ export class Js2WordCloud {
                 this._showMask(LOADING_TEXT_HTML_PRE += (typeof loadingOption.text === 'string' ? loadingOption.text : DEFAULT_LOADING_TEXT + '</span>'))
             }
         } else {
+            debugger
             this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + LOADING_TEXT_HTML_PRE + DEFAULT_LOADING_TEXT + '</span></div>')
         }
     }
