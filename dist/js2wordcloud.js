@@ -109,18 +109,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (option.tooltip && option.tooltip.show === true) {
 	                if (!this._tooltip) {
 	                    this._tooltip = window.document.createElement('div');
-	                    this._tooltip.style.backgroundColor = '#555';
+	                    this._tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.701961)';
 	                    this._tooltip.style.color = '#fff';
-	                    this._tooltip.style.padding = '10px';
+	                    this._tooltip.style.padding = '5px';
 	                    this._tooltip.style.borderRadius = '5px';
-	                    this._tooltip.style.fontSize = '14px';
+	                    this._tooltip.style.fontSize = '12px';
 	                    this._tooltip.style.fontFamily = option.fontFamily;
 	                    this._tooltip.style.lineHeight = 1.4;
-	                    this._tooltip.style.webkitTransition = 'all 0.1s ease-out';
-	                    this._tooltip.style.mozTransition = 'all 0.1s ease-out';
-	                    this._tooltip.style.transition = 'all 0.1s ease-out';
+	                    this._tooltip.style.webkitTransition = 'left 0.2s, top 0.2s';
+	                    this._tooltip.style.mozTransition = 'left 0.2s, top 0.2s';
+	                    this._tooltip.style.transition = 'left 0.2s, top 0.2s';
 	                    this._tooltip.style.position = 'absolute';
 	                    this._tooltip.style.whiteSpace = 'nowrap';
+	                    this._tooltip.style.zIndex = 999;
 	                    this._tooltip.style.display = 'none';
 	                    this._wrapper.appendChild(this._tooltip);
 	                    this._container.onmouseout = function () {
@@ -145,7 +146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this._wrapper.style.backgroundColor = option.noDataLoadingOption.backgroundColor;
 	                }
 	                var TEXT = option.noDataLoadingOption.text || '';
-	                this._showMask('<span class="__wc_loadding_text__" style="' + STYLE + '">' + TEXT + '</span>');
+	                this._showMask('<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>');
 	            } else {
 	                this._wordcloud2 = WordCloud(this._canvas, option);
 	            }
