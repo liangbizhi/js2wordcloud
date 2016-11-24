@@ -177,9 +177,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	                if (loadingOption.effect === 'spin') {
 	                    this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + LOADING_TEXT_HTML_PRE + '</div>');
+	                } else {
+	                    this._showMask(LOADING_TEXT_HTML_PRE += typeof loadingOption.text === 'string' ? loadingOption.text : DEFAULT_LOADING_TEXT + '</span>');
 	                }
 	            } else {
-	                this._showMask(LOADING_TEXT_HTML_PRE += DEFAULT_LOADING_TEXT + '</span>');
+	                this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + LOADING_TEXT_HTML_PRE + DEFAULT_LOADING_TEXT + '</span></div>');
 	            }
 	        }
 	    }, {

@@ -1,0 +1,2 @@
+#!/bin/bash
+git add -A && git ci -m "[publish]" && git push origin master && git checkout gh-pages && git merge master && git push origin gh-pages && git checkout master && npm version patch && npm publish
