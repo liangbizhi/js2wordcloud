@@ -143,7 +143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                }
 	                if (typeof option.noDataLoadingOption.backgroundColor === 'string') {
-	                    this._wrapper.style.backgroundColor = option.noDataLoadingOption.backgroundColor;
+	                    this._dataMask.style.backgroundColor = option.noDataLoadingOption.backgroundColor;
 	                }
 	                var TEXT = option.noDataLoadingOption.text || '';
 	                this._showMask('<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>');
@@ -195,11 +195,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'resize',
 	        value: function resize() {
-	            if (!this._dataEmpty()) {
-	                this._canvas.width = this._container.clientWidth;
-	                this._canvas.height = this._container.clientHeight;
-	                this._wordcloud2 = WordCloud(this._canvas, this._option);
-	            }
+	            this._canvas.width = this._container.clientWidth;
+	            this._canvas.height = this._container.clientHeight;
+	            this._wordcloud2 = WordCloud(this._canvas, this._option);
 	        }
 	    }, {
 	        key: '_init',

@@ -32,6 +32,21 @@
             wc.setOption(option)
         }, 2000)
 
+        setTimeout(function() {
+            wc.setOption({
+                noDataLoadingOption: {
+                    backgroundColor: '#f00',
+                    text: '暂无数据'
+                }    
+            })
+            console.log('changed')
+        }, 4000)
+
+        setTimeout(function() {
+            wc.setOption(option)
+            console.log('changed')
+        }, 6000)
+
         /////////////////
         var option1 = {
             color: '#15a4fa',

@@ -73,7 +73,7 @@ export class Js2WordCloud {
                 }
             }
             if(typeof option.noDataLoadingOption.backgroundColor === 'string') {
-                this._wrapper.style.backgroundColor = option.noDataLoadingOption.backgroundColor
+                this._dataMask.style.backgroundColor = option.noDataLoadingOption.backgroundColor
             }
             var TEXT = option.noDataLoadingOption.text || ''
             this._showMask('<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>')
@@ -130,11 +130,9 @@ export class Js2WordCloud {
     }
 
     resize() {
-        if(!this._dataEmpty()) {
-            this._canvas.width = this._container.clientWidth
-            this._canvas.height = this._container.clientHeight
-            this._wordcloud2 = WordCloud(this._canvas, this._option)
-        }
+        this._canvas.width = this._container.clientWidth
+        this._canvas.height = this._container.clientHeight
+        this._wordcloud2 = WordCloud(this._canvas, this._option)
     }
 
     _init() {
