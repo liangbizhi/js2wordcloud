@@ -31,6 +31,7 @@
             wc.hideLoading()
             wc.setOption(option)
         }, 2000)
+
         /////////////////
         var option1 = {
             color: '#15a4fa',
@@ -49,6 +50,21 @@
             wc1.hideLoading()
             wc1.setOption(option1)
         }, 2000)
+
+        var option8 = {
+            tooltip: {
+                show: true,
+                formatter: function(item) {
+                    return item[0] + ': 价值¥' + item[1] + '<br>' + '词云图'
+                }
+            },
+            list: [['华莱士', 500000], ['华莱士', 50], ['华莱士', 40], ['华莱士', 40], ['华莱士', 30], ['华莱士', 30], ['华莱士', 20], ['华莱士', 20], ['华莱士', 1], ['华莱士', 1]],
+            color: 'red'
+        }
+        setTimeout(function() {
+            wc1.setOption(option8)
+            console.log('changed')
+        }, 4000)
 
         window.onresize = function() { 
             wc.resize()

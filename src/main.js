@@ -78,6 +78,7 @@ export class Js2WordCloud {
             var TEXT = option.noDataLoadingOption.text || ''
             this._showMask('<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>')
         } else {
+            this._showMask('');
             this._wordcloud2 = WordCloud(this._canvas, option)
         }
     }
@@ -118,7 +119,6 @@ export class Js2WordCloud {
                 this._showMask(LOADING_TEXT_HTML_PRE += (typeof loadingOption.text === 'string' ? loadingOption.text : DEFAULT_LOADING_TEXT + '</span>'))
             }
         } else {
-            debugger
             this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + LOADING_TEXT_HTML_PRE + DEFAULT_LOADING_TEXT + '</span></div>')
         }
     }
