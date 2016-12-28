@@ -67,6 +67,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var WordCloud = __webpack_require__(1);
 	var spinCss = __webpack_require__(2);
 
+	var LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">' + '<div class="__wc_loading_wrapper_item__">' + '<div class="__wc_loading_wrapper_item_inner__">';
+	var LODAING_WRAPPTER_HTML_END = '</div></div></div>';
+
 	var Js2WordCloud = exports.Js2WordCloud = function () {
 	    function Js2WordCloud(element) {
 	        _classCallCheck(this, Js2WordCloud);
@@ -146,7 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this._dataMask.style.backgroundColor = option.noDataLoadingOption.backgroundColor;
 	                }
 	                var TEXT = option.noDataLoadingOption.text || '';
-	                this._showMask('<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>');
+	                this._showMask(LODAING_WRAPPTER_HTML_PRE + '<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>' + LODAING_WRAPPTER_HTML_END);
 	            } else {
 	                this._showMask('');
 	                this._wordcloud2 = WordCloud(this._canvas, option);
@@ -163,26 +166,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'showLoading',
 	        value: function showLoading(loadingOption) {
+	            var loadingTxt;
 	            var DEFAULT_LOADING_TEXT = '正在加载...';
-	            var LOADING_TEXT_HTML_PRE = '<span class="__wc_loadding_text__">';
-	            var LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">';
 	            var LOADING_LOGO_HTML = '<div class="__wc_loading__">' + '<div></div>' + '<div></div>' + '<div></div>' + '<div></div>' + '<div></div>' + '<div></div>' + '<div></div>' + '<div></div>' + '</div>';
 	            if (loadingOption) {
 	                if (loadingOption.backgroundColor) {
 	                    this._dataMask.style.backgroundColor = loadingOption.backgroundColor;
 	                }
-	                if (typeof loadingOption.text === 'string') {
-	                    LOADING_TEXT_HTML_PRE += loadingOption.text + '</span>';
-	                } else {
-	                    LOADING_TEXT_HTML_PRE += DEFAULT_LOADING_TEXT + '</span>';
-	                }
+	                loadingTxt = loadingOption.text === undefined ? DEFAULT_LOADING_TEXT : loadingOption.text;
 	                if (loadingOption.effect === 'spin') {
-	                    this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + LOADING_TEXT_HTML_PRE + '</div>');
+	                    this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + loadingTxt + LODAING_WRAPPTER_HTML_END);
 	                } else {
-	                    this._showMask(LOADING_TEXT_HTML_PRE += typeof loadingOption.text === 'string' ? loadingOption.text : DEFAULT_LOADING_TEXT + '</span>');
+	                    this._showMask(LODAING_WRAPPTER_HTML_PRE + loadingTxt + LODAING_WRAPPTER_HTML_END);
 	                }
 	            } else {
-	                this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + LOADING_TEXT_HTML_PRE + DEFAULT_LOADING_TEXT + '</span></div>');
+	                this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + DEFAULT_LOADING_TEXT + LODAING_WRAPPTER_HTML_END);
 	            }
 	        }
 	    }, {
@@ -213,14 +211,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            this._dataMask = window.document.createElement('div');
 	            this._dataMask.height = 'inherit';
-	            this._dataMask.style.lineHeight = height + 'px';
 	            this._dataMask.style.textAlign = 'center';
 	            this._dataMask.style.color = '#888';
 	            this._dataMask.style.fontSize = '14px';
 	            this._dataMask.style.position = 'absolute';
 	            this._dataMask.style.left = '0';
 	            this._dataMask.style.right = '0';
-	            this._dataMask.display = 'none';
+	            this._dataMask.style.top = '0';
+	            this._dataMask.style.bottom = '0';
+	            this._dataMask.style.display = 'none';
 
 	            this._wrapper.appendChild(this._dataMask);
 	            this._container.appendChild(this._wrapper);
@@ -271,7 +270,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _showMask(innerHTML) {
 	            if (this._dataMask) {
 	                this._dataMask.innerHTML = innerHTML;
-	                this._dataMask.style.display = 'block';
+	                if (innerHTML === '') {
+	                    this._dataMask.style.display = 'none';
+	                } else {
+	                    this._dataMask.style.display = 'block';
+	                }
 	            }
 	        }
 	    }, {
@@ -1447,7 +1450,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes __wc_loading_animation__ {\r\n  50% {\r\n    opacity: 0.3;\r\n    -webkit-transform: scale(0.4);\r\n            transform: scale(0.4); }\r\n\r\n  100% {\r\n    opacity: 1;\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1); } }\r\n\r\n@keyframes __wc_loading_animation__ {\r\n  50% {\r\n    opacity: 0.3;\r\n    -webkit-transform: scale(0.4);\r\n            transform: scale(0.4); }\r\n\r\n  100% {\r\n    opacity: 1;\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1); } }\r\n\r\n.__wc_loading__ {\r\n  position: relative; \r\n  display: inline-block;\r\n  top: -12px;\r\n  left: 24px;\r\n}\r\n.__wc_loadding_text__ {\r\n    position: relative;\r\n    top: 1px;\r\n    margin-left: 60px;\r\n}\r\n  .__wc_loading__ > div:nth-child(1) {\r\n    top: 15px;\r\n    left: 0;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(2) {\r\n    top: 10.22726px;\r\n    left: 10.22726px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.12s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.12s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(3) {\r\n    top: 0;\r\n    left: 15px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.24s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.24s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(4) {\r\n    top: -10.22726px;\r\n    left: 10.22726px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.36s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.36s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(5) {\r\n    top: -15px;\r\n    left: 0;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.48s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.48s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(6) {\r\n    top: -10.22726px;\r\n    left: -10.22726px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.6s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.6s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(7) {\r\n    top: 0;\r\n    left: -15px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.72s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.72s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(8) {\r\n    top: 10.22726px;\r\n    left: -10.22726px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.84s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.84s infinite linear; }\r\n  .__wc_loading__ > div {\r\n    background-color: #d3d3d3;\r\n    width: 10px;\r\n    height: 10px;\r\n    border-radius: 100%;\r\n    margin: 2px;\r\n    -webkit-animation-fill-mode: both;\r\n            animation-fill-mode: both;\r\n    position: absolute; \r\n  }", ""]);
+	exports.push([module.id, "@-webkit-keyframes __wc_loading_animation__ {\n  50% {\n    opacity: 0.3;\n    -webkit-transform: scale(0.4);\n            transform: scale(0.4); }\n\n  100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1); } }\n\n@keyframes __wc_loading_animation__ {\n  50% {\n    opacity: 0.3;\n    -webkit-transform: scale(0.4);\n            transform: scale(0.4); }\n\n  100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1); } }\n\n.__wc_loading_wrapper__ {\n  display: table;\n  height: 100%;\n  width: 100%;\n}\n\n.__wc_loading_wrapper_item__ {\n  display: table-cell;\n  vertical-align: middle;\n  text-align: center;\n  position: relative;\n  padding-left: 60px;\n  padding-right: 60px;\n  line-height: 1.4;\n}\n.__wc_loading_wrapper_item_inner__ {\n  position: relative;\n  text-align: left;\n  display: inline-block;\n}\n\n.__wc_loading__ {\n  position: absolute;\n  top: 50%;\n  left: -40px;\n  margin-top: -6px;\n}\n\n  .__wc_loading__ > div:nth-child(1) {\n    top: 15px;\n    left: 0;\n    -webkit-animation: __wc_loading_animation__ 1s 0s infinite linear;\n            animation: __wc_loading_animation__ 1s 0s infinite linear; }\n  .__wc_loading__ > div:nth-child(2) {\n    top: 10.22726px;\n    left: 10.22726px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.12s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.12s infinite linear; }\n  .__wc_loading__ > div:nth-child(3) {\n    top: 0;\n    left: 15px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.24s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.24s infinite linear; }\n  .__wc_loading__ > div:nth-child(4) {\n    top: -10.22726px;\n    left: 10.22726px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.36s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.36s infinite linear; }\n  .__wc_loading__ > div:nth-child(5) {\n    top: -15px;\n    left: 0;\n    -webkit-animation: __wc_loading_animation__ 1s 0.48s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.48s infinite linear; }\n  .__wc_loading__ > div:nth-child(6) {\n    top: -10.22726px;\n    left: -10.22726px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.6s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.6s infinite linear; }\n  .__wc_loading__ > div:nth-child(7) {\n    top: 0;\n    left: -15px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.72s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.72s infinite linear; }\n  .__wc_loading__ > div:nth-child(8) {\n    top: 10.22726px;\n    left: -10.22726px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.84s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.84s infinite linear; }\n  .__wc_loading__ > div {\n    background-color: #d3d3d3;\n    width: 10px;\n    height: 10px;\n    border-radius: 100%;\n    margin: 2px;\n    -webkit-animation-fill-mode: both;\n            animation-fill-mode: both;\n    position: absolute; \n  }", ""]);
 
 	// exports
 

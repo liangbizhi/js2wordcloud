@@ -1,6 +1,11 @@
 var WordCloud = require('./wordcloud2')
 var spinCss = require('./css/spin.css')
 
+const LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">' +
+                                    '<div class="__wc_loading_wrapper_item__">' +
+                                    '<div class="__wc_loading_wrapper_item_inner__">'
+const LODAING_WRAPPTER_HTML_END = '</div></div></div>'
+
 export class Js2WordCloud {
     constructor(element) {
         this._container = element
@@ -76,7 +81,7 @@ export class Js2WordCloud {
                 this._dataMask.style.backgroundColor = option.noDataLoadingOption.backgroundColor
             }
             var TEXT = option.noDataLoadingOption.text || ''
-            this._showMask('<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>')
+            this._showMask(LODAING_WRAPPTER_HTML_PRE + '<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>' + LODAING_WRAPPTER_HTML_END)
         } else {
             this._showMask('');
             this._wordcloud2 = WordCloud(this._canvas, option)
@@ -91,10 +96,9 @@ export class Js2WordCloud {
     }
 
     showLoading(loadingOption) {
-        var DEFAULT_LOADING_TEXT = '正在加载...'
-        var LOADING_TEXT_HTML_PRE = '<span class="__wc_loadding_text__">'
-        var LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">'
-        var LOADING_LOGO_HTML = '<div class="__wc_loading__">' +
+        var loadingTxt;
+        const DEFAULT_LOADING_TEXT = '正在加载...'
+        const LOADING_LOGO_HTML = '<div class="__wc_loading__">' +
                                 '<div></div>' +
                                 '<div></div>' +
                                 '<div></div>' +
@@ -108,18 +112,14 @@ export class Js2WordCloud {
             if(loadingOption.backgroundColor) {
                 this._dataMask.style.backgroundColor = loadingOption.backgroundColor
             }
-            if(typeof loadingOption.text === 'string') {
-                LOADING_TEXT_HTML_PRE += (loadingOption.text + '</span>')
-            } else {
-                LOADING_TEXT_HTML_PRE += (DEFAULT_LOADING_TEXT + '</span>')
-            }
+            loadingTxt = loadingOption.text === undefined ? DEFAULT_LOADING_TEXT : loadingOption.text
             if(loadingOption.effect === 'spin') {
-                this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + LOADING_TEXT_HTML_PRE + '</div>')
+                this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + loadingTxt + LODAING_WRAPPTER_HTML_END)
             } else {
-                this._showMask(LOADING_TEXT_HTML_PRE += (typeof loadingOption.text === 'string' ? loadingOption.text : DEFAULT_LOADING_TEXT + '</span>'))
+                this._showMask(LODAING_WRAPPTER_HTML_PRE + loadingTxt + LODAING_WRAPPTER_HTML_END)
             }
         } else {
-            this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + LOADING_TEXT_HTML_PRE + DEFAULT_LOADING_TEXT + '</span></div>')
+            this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + DEFAULT_LOADING_TEXT + LODAING_WRAPPTER_HTML_END)
         }
     }
 
@@ -147,14 +147,15 @@ export class Js2WordCloud {
 
         this._dataMask = window.document.createElement('div')
         this._dataMask.height = 'inherit'
-        this._dataMask.style.lineHeight = height + 'px'
         this._dataMask.style.textAlign = 'center'
         this._dataMask.style.color = '#888'
         this._dataMask.style.fontSize = '14px'
         this._dataMask.style.position = 'absolute'
         this._dataMask.style.left = '0'
         this._dataMask.style.right = '0'
-        this._dataMask.display = 'none'
+        this._dataMask.style.top = '0'
+        this._dataMask.style.bottom = '0'
+        this._dataMask.style.display = 'none'
 
         this._wrapper.appendChild(this._dataMask)
         this._container.appendChild(this._wrapper)
@@ -203,7 +204,11 @@ export class Js2WordCloud {
     _showMask(innerHTML) {
         if(this._dataMask) {
             this._dataMask.innerHTML = innerHTML
-            this._dataMask.style.display = 'block'
+            if (innerHTML === '') {
+                this._dataMask.style.display = 'none'
+            } else {
+                this._dataMask.style.display = 'block'
+            }
         }
     }
 
