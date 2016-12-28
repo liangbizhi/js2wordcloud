@@ -77,6 +77,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._container = element;
 	        this._wrapper = null;
 	        this._canvas = null;
+	        this._maskCanvas = null;
 	        this._dataMask = null;
 	        this._tooltip = null;
 
@@ -133,26 +134,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	                option.hover = hoverCb;
 	            }
-
 	            this._option = option;
-	            if (this._dataEmpty() && option.noDataLoadingOption) {
-	                var STYLE = '';
-	                if (option.noDataLoadingOption.textStyle) {
-	                    if (typeof option.noDataLoadingOption.textStyle.color === 'string') {
-	                        STYLE += 'color: ' + option.noDataLoadingOption.textStyle.color + ';';
-	                    }
-	                    if (typeof option.noDataLoadingOption.textStyle.fontSize === 'number') {
-	                        STYLE += 'font-size: ' + option.noDataLoadingOption.textStyle.fontSize + 'px;';
-	                    }
-	                }
-	                if (typeof option.noDataLoadingOption.backgroundColor === 'string') {
-	                    this._dataMask.style.backgroundColor = option.noDataLoadingOption.backgroundColor;
-	                }
-	                var TEXT = option.noDataLoadingOption.text || '';
-	                this._showMask(LODAING_WRAPPTER_HTML_PRE + '<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>' + LODAING_WRAPPTER_HTML_END);
+	            _sortWorldCloud(option);
+	            if (option && /\.(jpg|png)$/.test(option.imageShape)) {
+	                _imageShape.call(this, option);
+	            } else if (option.shape === 'circle') {
+	                _circle.call(this, option);
 	            } else {
-	                this._showMask('');
-	                this._wordcloud2 = WordCloud(this._canvas, option);
+	                _renderShape.call(this, option);
 	            }
 	        }
 	        /**
@@ -289,6 +278,146 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return Js2WordCloud;
 	}();
+
+	function _sortWorldCloud(option) {
+	    option.list && option.list.sort(function (a, b) {
+	        return b[1] - a[1];
+	    });
+	}
+
+	function _renderShape(option) {
+	    if (this._maskCanvas) {
+	        option.clearCanvas = false;
+
+	        /* Determine bgPixel by creating
+	         another canvas and fill the specified background color. */
+	        var bctx = window.document.createElement('canvas').getContext('2d');
+
+	        bctx.fillStyle = option.backgroundColor || '#fff';
+	        bctx.fillRect(0, 0, 1, 1);
+	        var bgPixel = bctx.getImageData(0, 0, 1, 1).data;
+
+	        var maskCanvasScaled = window.document.createElement('canvas');
+	        maskCanvasScaled.width = this._canvas.width;
+	        maskCanvasScaled.height = this._canvas.height;
+	        var ctx = maskCanvasScaled.getContext('2d');
+
+	        ctx.drawImage(this._maskCanvas, 0, 0, this._maskCanvas.width, this._maskCanvas.height, 0, 0, maskCanvasScaled.width, maskCanvasScaled.height);
+
+	        var imageData = ctx.getImageData(0, 0, maskCanvasScaled.width, maskCanvasScaled.height);
+	        var newImageData = ctx.createImageData(imageData);
+	        for (var i = 0; i < imageData.data.length; i += 4) {
+	            if (imageData.data[i + 3] > 128) {
+	                newImageData.data[i] = bgPixel[0];
+	                newImageData.data[i + 1] = bgPixel[1];
+	                newImageData.data[i + 2] = bgPixel[2];
+	                newImageData.data[i + 3] = bgPixel[3];
+	            } else {
+	                // This color must not be the same w/ the bgPixel.
+	                newImageData.data[i] = bgPixel[0];
+	                newImageData.data[i + 1] = bgPixel[1];
+	                newImageData.data[i + 2] = bgPixel[2];
+	                newImageData.data[i + 3] = bgPixel[3] ? bgPixel[3] - 1 : 1;
+	            }
+	        }
+	        ctx.putImageData(newImageData, 0, 0);
+
+	        ctx = this._canvas.getContext('2d');
+	        ctx.drawImage(maskCanvasScaled, 0, 0);
+	    }
+
+	    if (this._dataEmpty() && option.noDataLoadingOption) {
+	        var STYLE = '';
+	        if (option.noDataLoadingOption.textStyle) {
+	            if (typeof option.noDataLoadingOption.textStyle.color === 'string') {
+	                STYLE += 'color: ' + option.noDataLoadingOption.textStyle.color + ';';
+	            }
+	            if (typeof option.noDataLoadingOption.textStyle.fontSize === 'number') {
+	                STYLE += 'font-size: ' + option.noDataLoadingOption.textStyle.fontSize + 'px;';
+	            }
+	        }
+	        if (typeof option.noDataLoadingOption.backgroundColor === 'string') {
+	            this._dataMask.style.backgroundColor = option.noDataLoadingOption.backgroundColor;
+	        }
+	        var TEXT = option.noDataLoadingOption.text || '';
+	        this._showMask(LODAING_WRAPPTER_HTML_PRE + '<span class="__wc_no_data_text__" style="' + STYLE + '">' + TEXT + '</span>' + LODAING_WRAPPTER_HTML_END);
+	    } else {
+	        this._showMask('');
+	        this._wordcloud2 = WordCloud(this._canvas, option);
+	    }
+	}
+
+	function _circle(option) {
+	    this._maskCanvas = window.document.createElement('canvas');
+	    this._maskCanvas.width = 500;
+	    this._maskCanvas.height = 500;
+	    var ctx = this._maskCanvas.getContext('2d');
+	    ctx.fillStyle = "#000000";
+	    ctx.beginPath();
+	    ctx.arc(250, 250, 240, 0, Math.PI * 2, true);
+	    ctx.closePath();
+	    ctx.fill();
+
+	    var imageData = ctx.getImageData(0, 0, this._maskCanvas.width, this._maskCanvas.height);
+	    var newImageData = ctx.createImageData(imageData);
+
+	    for (var i = 0; i < imageData.data.length; i += 4) {
+	        var tone = imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2];
+	        var alpha = imageData.data[i + 3];
+
+	        if (alpha < 128 || tone > 128 * 3) {
+	            // Area not to draw
+	            newImageData.data[i] = newImageData.data[i + 1] = newImageData.data[i + 2] = 255;
+	            newImageData.data[i + 3] = 0;
+	        } else {
+	            // Area to draw
+	            newImageData.data[i] = newImageData.data[i + 1] = newImageData.data[i + 2] = 0;
+	            newImageData.data[i + 3] = 255;
+	        }
+	    }
+	    ctx.putImageData(newImageData, 0, 0);
+	    _renderShape.call(this, option);
+	}
+
+	function _imageShape(option) {
+	    var _this = this;
+
+	    var img = window.document.createElement('img');
+	    img.crossOrigin = "Anonymous";
+	    img.onload = function () {
+	        _this._maskCanvas = window.document.createElement('canvas');
+	        _this._maskCanvas.width = img.width;
+	        _this._maskCanvas.height = img.height;
+
+	        var ctx = _this._maskCanvas.getContext('2d');
+	        ctx.drawImage(img, 0, 0, img.width, img.height);
+
+	        var imageData = ctx.getImageData(0, 0, _this._maskCanvas.width, _this._maskCanvas.height);
+	        var newImageData = ctx.createImageData(imageData);
+
+	        for (var i = 0; i < imageData.data.length; i += 4) {
+	            var tone = imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2];
+	            var alpha = imageData.data[i + 3];
+
+	            if (alpha < 128 || tone > 128 * 3) {
+	                // Area not to draw
+	                newImageData.data[i] = newImageData.data[i + 1] = newImageData.data[i + 2] = 255;
+	                newImageData.data[i + 3] = 0;
+	            } else {
+	                // Area to draw
+	                newImageData.data[i] = newImageData.data[i + 1] = newImageData.data[i + 2] = 0;
+	                newImageData.data[i + 3] = 255;
+	            }
+	        }
+	        ctx.putImageData(newImageData, 0, 0);
+	        _renderShape.call(_this, option);
+	    };
+
+	    img.onerror = function () {
+	        _renderShape.call(this, option);
+	    };
+	    img.src = option.imageShape;
+	}
 
 	module.exports = Js2WordCloud;
 

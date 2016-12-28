@@ -46,7 +46,8 @@ wc.setOption({
 * 支持tooltip。包括tooltip的开关和数据格式化formatter；
 * 支持showLoading和hideLoading加载数据loading；
 * 支持resize；
-* 当词云数值相差过大时，对字体大小范围进行约束。
+* 当词云数值相差过大时，对字体大小范围进行约束；
+* 更好地支持图片形状。
 
 
 ## Document
@@ -57,20 +58,21 @@ wc.setOption({
 
     options必须通过此API进行设置，才能显示词云
 
-    在wordcloud2.js原options基础上增加：
+    **在wordcloud2.js原options基础上增加：**
 
     ```javascript
     {
         // ...
-        fontSizeFactor: 0.1,                            // 当词云值相差太大，可设置此值进字体行大小微调，默认0.1
-        maxFontSize: 60,                                // 最大fontSize，用来控制weightFactor，默认60
-        minFontSize: 12,                                // 最小fontSize，用来控制weightFactor，默认12
+        imageShape: 'https://example.com/images/shape.png',     // 提供一张图片，根据其形状进行词云渲染，默认为null
+        fontSizeFactor: 0.1,                                    // 当词云值相差太大，可设置此值进字体行大小微调，默认0.1
+        maxFontSize: 60,                                        // 最大fontSize，用来控制weightFactor，默认60
+        minFontSize: 12,                                        // 最小fontSize，用来控制weightFactor，默认12
         tooltip: {
-            show: true,                                 // 默认：false
-            formatter: function(item) {                 // 数据格式化函数，item为list的一项
+            show: true,                                         // 默认：false
+            formatter: function(item) {                         // 数据格式化函数，item为list的一项
             }
         },
-        noDataLoadingOption: {                          // 无数据提示。
+        noDataLoadingOption: {                                  // 无数据提示。
             backgroundColor: '#eee',
             text: '暂无数据',
             textStyle: {
