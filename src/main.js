@@ -2,7 +2,7 @@ var WordCloud = require('./wordcloud2')
 var spinCss = require('./css/spin.css')
 
 const LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">' +
-                                    '<div class="__wc_loading_wrapper_item__">' +
+                                    '<div style="padding-left: 60px;" class="__wc_loading_wrapper_item__">' +
                                     '<div class="__wc_loading_wrapper_item_inner__">'
 const LODAING_WRAPPTER_HTML_END = '</div></div></div>'
 
@@ -115,6 +115,9 @@ export class Js2WordCloud {
             loadingTxt = loadingOption.text === undefined ? DEFAULT_LOADING_TEXT : loadingOption.text
             if(loadingOption.effect === 'spin') {
                 this._showMask(LODAING_WRAPPTER_HTML_PRE + LOADING_LOGO_HTML + loadingTxt + LODAING_WRAPPTER_HTML_END)
+                var dom = this._dataMask.childNodes[0].childNodes[0]
+                var paddingLeft = dom.style.paddingLeft
+                dom.style.paddingLeft = (parseInt(paddingLeft) + 45) + 'px'
             } else {
                 this._showMask(LODAING_WRAPPTER_HTML_PRE + loadingTxt + LODAING_WRAPPTER_HTML_END)
             }
