@@ -22,23 +22,23 @@ export class Js2WordCloud {
 
     setOption(option) {
         var __originHoverCb = option.hover
-        var self = this
         option.fontFamily = option.fontFamily || 'Microsoft YaHei,Helvetica,Times,serif'
-        self._fixWeightFactor(option)
-        var hoverCb = function(item, dimension, event) {
+        this._fixWeightFactor(option)
+        this._maskCanvas = null
+        var hoverCb = (item, dimension, event) => {
             if(item) {
                 var html = item[0] + ': ' + item[1]
                 if(typeof option.tooltip.formatter === 'function') {
                     html = option.tooltip.formatter(item)
                 }
-                self._tooltip.innerHTML = html
-                self._tooltip.style.top = (event.offsetY + 10) + 'px'
-                self._tooltip.style.left = (event.offsetX + 15) + 'px'
-                self._tooltip.style.display = 'block'
-                self._wrapper.style.cursor = 'pointer'
+                this._tooltip.innerHTML = html
+                this._tooltip.style.top = (event.offsetY + 10) + 'px'
+                this._tooltip.style.left = (event.offsetX + 15) + 'px'
+                this._tooltip.style.display = 'block'
+                this._wrapper.style.cursor = 'pointer'
             } else {
-                self._tooltip.style.display = 'none'
-                self._wrapper.style.cursor = 'default'
+                this._tooltip.style.display = 'none'
+                this._wrapper.style.cursor = 'default'
             }
             __originHoverCb && __originHoverCb(item, dimension, event)
         }
@@ -60,14 +60,15 @@ export class Js2WordCloud {
                 this._tooltip.style.zIndex = 999
                 this._tooltip.style.display = 'none'
                 this._wrapper.appendChild(this._tooltip)
-                this._container.onmouseout = function() {
-                    self._tooltip.style.display = 'none'
+                this._container.onmouseout = () => {
+                    this._tooltip.style.display = 'none'
                 }
             }
             option.hover = hoverCb
         }
-        this._option = option
+
         _sortWorldCloud(option);
+        this._option = option
         if (option && /\.(jpg|png)$/.test(option.imageShape)) {
             _imageShape.call(this, option)
         } else if (option.shape === 'circle') {
@@ -124,7 +125,8 @@ export class Js2WordCloud {
     resize() {
         this._canvas.width = this._container.clientWidth
         this._canvas.height = this._container.clientHeight
-        this._wordcloud2 = WordCloud(this._canvas, this._option)
+        _renderShape.call(this, this._option)
+        // this._wordcloud2 = WordCloud(this._canvas, this._option)
     }
 
     _init() {
@@ -210,9 +212,7 @@ export class Js2WordCloud {
 }
 
 function _sortWorldCloud(option) {
-    option.list && option.list.sort((a, b) => {
-        return b[1] - a[1]
-    })
+    option.list && option.list.sort((a, b) => b[1] - a[1])
 }
 
 function _renderShape(option) {
@@ -255,6 +255,7 @@ function _renderShape(option) {
         ctx.putImageData(newImageData, 0, 0)
 
         ctx = this._canvas.getContext('2d')
+        ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
         ctx.drawImage(maskCanvasScaled, 0, 0);
     }
 
@@ -285,7 +286,7 @@ function _circle(option) {
     this._maskCanvas.width = 500
     this._maskCanvas.height = 500
     var ctx = this._maskCanvas.getContext('2d')
-    ctx.fillStyle="#000000"
+    ctx.fillStyle = '#000000'
     ctx.beginPath()
     ctx.arc(250, 250, 240, 0, Math.PI * 2, true)
     ctx.closePath()

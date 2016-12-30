@@ -89,24 +89,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Js2WordCloud, [{
 	        key: 'setOption',
 	        value: function setOption(option) {
+	            var _this = this;
+
 	            var __originHoverCb = option.hover;
-	            var self = this;
 	            option.fontFamily = option.fontFamily || 'Microsoft YaHei,Helvetica,Times,serif';
-	            self._fixWeightFactor(option);
+	            this._fixWeightFactor(option);
+	            this._maskCanvas = null;
 	            var hoverCb = function hoverCb(item, dimension, event) {
 	                if (item) {
 	                    var html = item[0] + ': ' + item[1];
 	                    if (typeof option.tooltip.formatter === 'function') {
 	                        html = option.tooltip.formatter(item);
 	                    }
-	                    self._tooltip.innerHTML = html;
-	                    self._tooltip.style.top = event.offsetY + 10 + 'px';
-	                    self._tooltip.style.left = event.offsetX + 15 + 'px';
-	                    self._tooltip.style.display = 'block';
-	                    self._wrapper.style.cursor = 'pointer';
+	                    _this._tooltip.innerHTML = html;
+	                    _this._tooltip.style.top = event.offsetY + 10 + 'px';
+	                    _this._tooltip.style.left = event.offsetX + 15 + 'px';
+	                    _this._tooltip.style.display = 'block';
+	                    _this._wrapper.style.cursor = 'pointer';
 	                } else {
-	                    self._tooltip.style.display = 'none';
-	                    self._wrapper.style.cursor = 'default';
+	                    _this._tooltip.style.display = 'none';
+	                    _this._wrapper.style.cursor = 'default';
 	                }
 	                __originHoverCb && __originHoverCb(item, dimension, event);
 	            };
@@ -129,13 +131,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this._tooltip.style.display = 'none';
 	                    this._wrapper.appendChild(this._tooltip);
 	                    this._container.onmouseout = function () {
-	                        self._tooltip.style.display = 'none';
+	                        _this._tooltip.style.display = 'none';
 	                    };
 	                }
 	                option.hover = hoverCb;
 	            }
-	            this._option = option;
+
 	            _sortWorldCloud(option);
+	            this._option = option;
 	            if (option && /\.(jpg|png)$/.test(option.imageShape)) {
 	                _imageShape.call(this, option);
 	            } else if (option.shape === 'circle') {
@@ -187,7 +190,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function resize() {
 	            this._canvas.width = this._container.clientWidth;
 	            this._canvas.height = this._container.clientHeight;
-	            this._wordcloud2 = WordCloud(this._canvas, this._option);
+	            _renderShape.call(this, this._option);
+	            // this._wordcloud2 = WordCloud(this._canvas, this._option)
 	        }
 	    }, {
 	        key: '_init',
@@ -323,6 +327,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ctx.putImageData(newImageData, 0, 0);
 
 	        ctx = this._canvas.getContext('2d');
+	        ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 	        ctx.drawImage(maskCanvasScaled, 0, 0);
 	    }
 
@@ -352,7 +357,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this._maskCanvas.width = 500;
 	    this._maskCanvas.height = 500;
 	    var ctx = this._maskCanvas.getContext('2d');
-	    ctx.fillStyle = "#000000";
+	    ctx.fillStyle = '#000000';
 	    ctx.beginPath();
 	    ctx.arc(250, 250, 240, 0, Math.PI * 2, true);
 	    ctx.closePath();
@@ -380,19 +385,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function _imageShape(option) {
-	    var _this = this;
+	    var _this2 = this;
 
 	    var img = window.document.createElement('img');
 	    img.crossOrigin = "Anonymous";
 	    img.onload = function () {
-	        _this._maskCanvas = window.document.createElement('canvas');
-	        _this._maskCanvas.width = img.width;
-	        _this._maskCanvas.height = img.height;
+	        _this2._maskCanvas = window.document.createElement('canvas');
+	        _this2._maskCanvas.width = img.width;
+	        _this2._maskCanvas.height = img.height;
 
-	        var ctx = _this._maskCanvas.getContext('2d');
+	        var ctx = _this2._maskCanvas.getContext('2d');
 	        ctx.drawImage(img, 0, 0, img.width, img.height);
 
-	        var imageData = ctx.getImageData(0, 0, _this._maskCanvas.width, _this._maskCanvas.height);
+	        var imageData = ctx.getImageData(0, 0, _this2._maskCanvas.width, _this2._maskCanvas.height);
 	        var newImageData = ctx.createImageData(imageData);
 
 	        for (var i = 0; i < imageData.data.length; i += 4) {
@@ -410,7 +415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	        ctx.putImageData(newImageData, 0, 0);
-	        _renderShape.call(_this, option);
+	        _renderShape.call(_this2, option);
 	    };
 
 	    img.onerror = function () {
