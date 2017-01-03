@@ -1,5 +1,6 @@
 var WordCloud = require('./wordcloud2')
 var spinCss = require('./css/spin.css')
+var util = require('./util').default
 
 const LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">' +
                                     '<div style="padding-left: 60px;" class="__wc_loading_wrapper_item__">' +
@@ -21,15 +22,16 @@ export class Js2WordCloud {
     }
 
     setOption(option) {
-        var __originHoverCb = option.hover
-        option.fontFamily = option.fontFamily || 'Microsoft YaHei,Helvetica,Times,serif'
-        this._fixWeightFactor(option)
+        this._option = util.copy(option, true)
+        var __originHoverCb = this._option.hover
+        this._option.fontFamily = this._option.fontFamily || 'Microsoft YaHei,Helvetica,Times,serif'
+        this._fixWeightFactor(this._option)
         this._maskCanvas = null
         var hoverCb = (item, dimension, event) => {
             if(item) {
                 var html = item[0] + ': ' + item[1]
-                if(typeof option.tooltip.formatter === 'function') {
-                    html = option.tooltip.formatter(item)
+                if(typeof this._option.tooltip.formatter === 'function') {
+                    html = this._option.tooltip.formatter(item)
                 }
                 this._tooltip.innerHTML = html
                 this._tooltip.style.top = (event.offsetY + 10) + 'px'
@@ -64,17 +66,17 @@ export class Js2WordCloud {
                     this._tooltip.style.display = 'none'
                 }
             }
-            option.hover = hoverCb
+            this._option.hover = hoverCb
         }
-
-        _sortWorldCloud(option);
-        this._option = option
-        if (option && /\.(jpg|png)$/.test(option.imageShape)) {
-            _imageShape.call(this, option)
-        } else if (option.shape === 'circle') {
-            _circle.call(this, option)
+        console.log(!!this._option.list && this._option.list === option.list)
+        _sortWorldCloud(this._option);
+        
+        if (this._option && /\.(jpg|png)$/.test(this._option.imageShape)) {
+            _imageShape.call(this, this._option)
+        } else if (this._option.shape === 'circle') {
+            _circle.call(this, this._option)
         } else {
-            _renderShape.call(this, option)
+            _renderShape.call(this, this._option)
         }
     }
     /**

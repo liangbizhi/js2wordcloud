@@ -66,6 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var WordCloud = __webpack_require__(1);
 	var spinCss = __webpack_require__(2);
+	var util = __webpack_require__(6).default;
 
 	var LODAING_WRAPPTER_HTML_PRE = '<div class="__wc_loading_wrapper__">' + '<div style="padding-left: 60px;" class="__wc_loading_wrapper_item__">' + '<div class="__wc_loading_wrapper_item_inner__">';
 	var LODAING_WRAPPTER_HTML_END = '</div></div></div>';
@@ -91,15 +92,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function setOption(option) {
 	            var _this = this;
 
-	            var __originHoverCb = option.hover;
-	            option.fontFamily = option.fontFamily || 'Microsoft YaHei,Helvetica,Times,serif';
-	            this._fixWeightFactor(option);
+	            this._option = util.copy(option, true);
+	            var __originHoverCb = this._option.hover;
+	            this._option.fontFamily = this._option.fontFamily || 'Microsoft YaHei,Helvetica,Times,serif';
+	            this._fixWeightFactor(this._option);
 	            this._maskCanvas = null;
 	            var hoverCb = function hoverCb(item, dimension, event) {
 	                if (item) {
 	                    var html = item[0] + ': ' + item[1];
-	                    if (typeof option.tooltip.formatter === 'function') {
-	                        html = option.tooltip.formatter(item);
+	                    if (typeof _this._option.tooltip.formatter === 'function') {
+	                        html = _this._option.tooltip.formatter(item);
 	                    }
 	                    _this._tooltip.innerHTML = html;
 	                    _this._tooltip.style.top = event.offsetY + 10 + 'px';
@@ -134,17 +136,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        _this._tooltip.style.display = 'none';
 	                    };
 	                }
-	                option.hover = hoverCb;
+	                this._option.hover = hoverCb;
 	            }
+	            console.log(!!this._option.list && this._option.list === option.list);
+	            _sortWorldCloud(this._option);
 
-	            _sortWorldCloud(option);
-	            this._option = option;
-	            if (option && /\.(jpg|png)$/.test(option.imageShape)) {
-	                _imageShape.call(this, option);
-	            } else if (option.shape === 'circle') {
-	                _circle.call(this, option);
+	            if (this._option && /\.(jpg|png)$/.test(this._option.imageShape)) {
+	                _imageShape.call(this, this._option);
+	            } else if (this._option.shape === 'circle') {
+	                _circle.call(this, this._option);
 	            } else {
-	                _renderShape.call(this, option);
+	                _renderShape.call(this, this._option);
 	            }
 	        }
 	        /**
@@ -1899,6 +1901,54 @@ return /******/ (function(modules) { // webpackBootstrap
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var class2type = {};
+	var types = ['Null', 'Undefined', 'Number', 'Boolean', 'String', 'Object', 'Function', 'Array', 'RegExp', 'Date'];
+	for (var i = 0; i < types.length; i++) {
+		class2type['[object ' + types[i] + ']'] = types[i].toLowerCase();
+	}
+
+	function getType(obj) {
+		return class2type[Object.prototype.toString.call(obj)] || 'Object';
+	}
+
+	function isType(obj, type) {
+		return getType(obj) === type;
+	}
+
+	exports.default = {
+		copy: function copy(obj, deep) {
+			if (obj === null || (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) != 'object') {
+				return obj;
+			}
+			var i,
+			    target = isType(obj, 'array') ? [] : {},
+			    value,
+			    valueType;
+			for (i in obj) {
+				value = obj[i];
+				valueType = getType(value);
+				if (deep && (valueType === 'array' || valueType === 'object')) {
+					target[i] = this.copy(value);
+				} else {
+					target[i] = value;
+				}
+			}
+			return target;
+		}
+	};
 
 /***/ }
 /******/ ])
