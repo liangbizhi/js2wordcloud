@@ -138,7 +138,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	                this._option.hover = hoverCb;
 	            }
-	            console.log(!!this._option.list && this._option.list === option.list);
 	            _sortWorldCloud(this._option);
 
 	            if (this._option && /\.(jpg|png)$/.test(this._option.imageShape)) {
@@ -333,7 +332,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ctx.drawImage(maskCanvasScaled, 0, 0);
 	    }
 
-	    if (this._dataEmpty() && option.noDataLoadingOption) {
+	    if (this._dataEmpty() && option && option.noDataLoadingOption) {
 	        var STYLE = '';
 	        if (option.noDataLoadingOption.textStyle) {
 	            if (typeof option.noDataLoadingOption.textStyle.color === 'string') {
