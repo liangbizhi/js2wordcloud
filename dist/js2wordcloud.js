@@ -52,7 +52,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -117,12 +117,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (option.tooltip && option.tooltip.show === true) {
 	                if (!this._tooltip) {
 	                    this._tooltip = window.document.createElement('div');
-	                    this._tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.701961)';
+	                    this._tooltip.className = "__wc_tooltip__";
+	                    this._tooltip.style.backgroundColor = option.tooltip.backgroundColor || 'rgba(0, 0, 0, 0.701961)';
 	                    this._tooltip.style.color = '#fff';
 	                    this._tooltip.style.padding = '5px';
 	                    this._tooltip.style.borderRadius = '5px';
 	                    this._tooltip.style.fontSize = '12px';
-	                    this._tooltip.style.fontFamily = option.fontFamily;
+	                    this._tooltip.style.fontFamily = option.fontFamily || this._option.fontFamily;
 	                    this._tooltip.style.lineHeight = 1.4;
 	                    this._tooltip.style.webkitTransition = 'left 0.2s, top 0.2s';
 	                    this._tooltip.style.mozTransition = 'left 0.2s, top 0.2s';
@@ -427,9 +428,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = Js2WordCloud;
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
 
@@ -671,13 +672,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            break;
 
 	          /*
-	           To work out an X-gon, one has to calculate "m",
+	            To work out an X-gon, one has to calculate "m",
 	          where 1/(cos(2*PI/X)+m*sin(2*PI/X)) = 1/(cos(0)+m*sin(0))
 	          http://www.wolframalpha.com/input/?i=1%2F%28cos%282*PI%2FX%29%2Bm*sin%28
 	          2*PI%2FX%29%29+%3D+1%2F%28cos%280%29%2Bm*sin%280%29%29
-	           Copy the solution into polar equation r = 1/(cos(t') + m*sin(t'))
+	            Copy the solution into polar equation r = 1/(cos(t') + m*sin(t'))
 	          where t' equals to mod(t, 2PI/X);
-	           */
+	            */
 
 	          case 'diamond':
 	          case 'square':
@@ -1553,9 +1554,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  })(this); //jshint ignore:line
 	}).call(window);
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
@@ -1569,8 +1570,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./spin.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./spin.css");
+			module.hot.accept("!!../../node_modules/css-loader/index.js!./spin.css", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!./spin.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1579,23 +1580,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes __wc_loading_animation__ {\n  50% {\n    opacity: 0.3;\n    -webkit-transform: scale(0.4);\n            transform: scale(0.4); }\n\n  100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1); } }\n\n@keyframes __wc_loading_animation__ {\n  50% {\n    opacity: 0.3;\n    -webkit-transform: scale(0.4);\n            transform: scale(0.4); }\n\n  100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1); } }\n\n.__wc_loading_wrapper__ {\n  display: table;\n  height: 100%;\n  width: 100%;\n}\n\n.__wc_loading_wrapper_item__ {\n  display: table-cell;\n  vertical-align: middle;\n  text-align: center;\n  position: relative;\n  padding-right: 60px;\n  line-height: 1.4;\n}\n.__wc_loading_wrapper_item_inner__ {\n  position: relative;\n  text-align: left;\n  display: inline-block;\n}\n\n.__wc_loading__ {\n  position: absolute;\n  top: 50%;\n  left: -40px;\n  margin-top: -6px;\n}\n\n  .__wc_loading__ > div:nth-child(1) {\n    top: 15px;\n    left: 0;\n    -webkit-animation: __wc_loading_animation__ 1s 0s infinite linear;\n            animation: __wc_loading_animation__ 1s 0s infinite linear; }\n  .__wc_loading__ > div:nth-child(2) {\n    top: 10.22726px;\n    left: 10.22726px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.12s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.12s infinite linear; }\n  .__wc_loading__ > div:nth-child(3) {\n    top: 0;\n    left: 15px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.24s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.24s infinite linear; }\n  .__wc_loading__ > div:nth-child(4) {\n    top: -10.22726px;\n    left: 10.22726px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.36s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.36s infinite linear; }\n  .__wc_loading__ > div:nth-child(5) {\n    top: -15px;\n    left: 0;\n    -webkit-animation: __wc_loading_animation__ 1s 0.48s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.48s infinite linear; }\n  .__wc_loading__ > div:nth-child(6) {\n    top: -10.22726px;\n    left: -10.22726px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.6s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.6s infinite linear; }\n  .__wc_loading__ > div:nth-child(7) {\n    top: 0;\n    left: -15px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.72s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.72s infinite linear; }\n  .__wc_loading__ > div:nth-child(8) {\n    top: 10.22726px;\n    left: -10.22726px;\n    -webkit-animation: __wc_loading_animation__ 1s 0.84s infinite linear;\n            animation: __wc_loading_animation__ 1s 0.84s infinite linear; }\n  .__wc_loading__ > div {\n    background-color: #d3d3d3;\n    width: 10px;\n    height: 10px;\n    border-radius: 100%;\n    margin: 2px;\n    -webkit-animation-fill-mode: both;\n            animation-fill-mode: both;\n    position: absolute; \n  }", ""]);
+	exports.push([module.id, "@-webkit-keyframes __wc_loading_animation__ {\r\n  50% {\r\n    opacity: 0.3;\r\n    -webkit-transform: scale(0.4);\r\n            transform: scale(0.4); }\r\n\r\n  100% {\r\n    opacity: 1;\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1); } }\r\n\r\n@keyframes __wc_loading_animation__ {\r\n  50% {\r\n    opacity: 0.3;\r\n    -webkit-transform: scale(0.4);\r\n            transform: scale(0.4); }\r\n\r\n  100% {\r\n    opacity: 1;\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1); } }\r\n\r\n.__wc_loading_wrapper__ {\r\n  display: table;\r\n  height: 100%;\r\n  width: 100%;\r\n}\r\n\r\n.__wc_loading_wrapper_item__ {\r\n  display: table-cell;\r\n  vertical-align: middle;\r\n  text-align: center;\r\n  position: relative;\r\n  padding-right: 60px;\r\n  line-height: 1.4;\r\n}\r\n.__wc_loading_wrapper_item_inner__ {\r\n  position: relative;\r\n  text-align: left;\r\n  display: inline-block;\r\n}\r\n\r\n.__wc_loading__ {\r\n  position: absolute;\r\n  top: 50%;\r\n  left: -40px;\r\n  margin-top: -6px;\r\n}\r\n\r\n  .__wc_loading__ > div:nth-child(1) {\r\n    top: 15px;\r\n    left: 0;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(2) {\r\n    top: 10.22726px;\r\n    left: 10.22726px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.12s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.12s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(3) {\r\n    top: 0;\r\n    left: 15px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.24s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.24s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(4) {\r\n    top: -10.22726px;\r\n    left: 10.22726px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.36s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.36s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(5) {\r\n    top: -15px;\r\n    left: 0;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.48s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.48s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(6) {\r\n    top: -10.22726px;\r\n    left: -10.22726px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.6s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.6s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(7) {\r\n    top: 0;\r\n    left: -15px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.72s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.72s infinite linear; }\r\n  .__wc_loading__ > div:nth-child(8) {\r\n    top: 10.22726px;\r\n    left: -10.22726px;\r\n    -webkit-animation: __wc_loading_animation__ 1s 0.84s infinite linear;\r\n            animation: __wc_loading_animation__ 1s 0.84s infinite linear; }\r\n  .__wc_loading__ > div {\r\n    background-color: #d3d3d3;\r\n    width: 10px;\r\n    height: 10px;\r\n    border-radius: 100%;\r\n    margin: 2px;\r\n    -webkit-animation-fill-mode: both;\r\n            animation-fill-mode: both;\r\n    position: absolute; \r\n  }", ""]);
 
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/*
 		MIT License http://www.opensource.org/licenses/mit-license.php
@@ -1649,9 +1650,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/*
 		MIT License http://www.opensource.org/licenses/mit-license.php
@@ -1666,7 +1667,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			};
 		},
 		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+			return /msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase());
 		}),
 		getHeadElement = memoize(function () {
 			return document.head || document.getElementsByTagName("head")[0];
@@ -1901,9 +1902,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -1949,7 +1950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	};
 
-/***/ }
+/***/ })
 /******/ ])
 });
 ;

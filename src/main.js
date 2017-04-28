@@ -47,12 +47,13 @@ export class Js2WordCloud {
         if (option.tooltip && option.tooltip.show === true) {
             if(!this._tooltip) {
                 this._tooltip = window.document.createElement('div')
-                this._tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.701961)'
+                this._tooltip.className="__wc_tooltip__"
+                this._tooltip.style.backgroundColor = option.tooltip.backgroundColor || 'rgba(0, 0, 0, 0.701961)'
                 this._tooltip.style.color = '#fff'
                 this._tooltip.style.padding = '5px'
                 this._tooltip.style.borderRadius = '5px'
                 this._tooltip.style.fontSize = '12px'
-                this._tooltip.style.fontFamily = option.fontFamily
+                this._tooltip.style.fontFamily = option.fontFamily || this._option.fontFamily
                 this._tooltip.style.lineHeight = 1.4
                 this._tooltip.style.webkitTransition = 'left 0.2s, top 0.2s'
                 this._tooltip.style.mozTransition = 'left 0.2s, top 0.2s'

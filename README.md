@@ -69,6 +69,7 @@ wc.setOption({
         minFontSize: 12,                                        // 最小fontSize，用来控制weightFactor，默认12
         tooltip: {
             show: true,                                         // 默认：false
+            backgroundColor: 'rgba(0, 0, 0, 0.701961)',         // 默认：'rgba(0, 0, 0, 0.701961)'
             formatter: function(item) {                         // 数据格式化函数，item为list的一项
             }
         },
