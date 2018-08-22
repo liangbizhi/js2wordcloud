@@ -47,7 +47,7 @@ wc.setOption({
 * 支持showLoading和hideLoading加载数据loading；
 * 支持resize；
 * 当词云数值相差过大时，对字体大小范围进行约束；
-* 更好地支持图片形状。
+* 更好地支持图片形状，请使用图形为纯黑色的白底图片。
 
 
 ## Document
