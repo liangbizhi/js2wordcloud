@@ -39,7 +39,8 @@ wc.setOption({
 })
 ```
 
-详细用法请看`index.html`。点击[demo](http://liangbizhi.github.io/js2wordcloud)
+一般用法请看`index.html`。点击[demo](http://liangbizhi.github.io/js2wordcloud)
+图片形状用法请看`index-shape.html`。点击[demo](http://liangbizhi.github.io/js2wordcloud/index-shape.html)
 
 ## Features
 
@@ -47,8 +48,10 @@ wc.setOption({
 * 支持showLoading和hideLoading加载数据loading；
 * 支持resize；
 * 当词云数值相差过大时，对字体大小范围进行约束；
-* 更好地支持图片形状，请使用图形为纯黑色的白底图片。
-
+* 更好地支持图片形状，注意点：
+    * 请使用图形为纯黑色的白底图片（格式为jpg/png）；
+    * 如果形状显示不太完美，请不断调整`fontSizeFactor`, `maxFontSize`和`minFontSize`等参数；
+    * 其他格式（SVG、base64等）暂不支持，请先转换为图片；
 
 ## Document
 
@@ -63,7 +66,7 @@ wc.setOption({
     ```javascript
     {
         // ...
-        imageShape: 'https://example.com/images/shape.png',     // 提供一张图片，根据其形状进行词云渲染，默认为null
+        imageShape: 'https://example.com/images/shape.png',     // 提供一张图片（链接方式，仅支持jpg/png），根据其形状进行词云渲染，默认为null
         fontSizeFactor: 0.1,                                    // 当词云值相差太大，可设置此值进字体行大小微调，默认0.1
         maxFontSize: 60,                                        // 最大fontSize，用来控制weightFactor，默认60
         minFontSize: 12,                                        // 最小fontSize，用来控制weightFactor，默认12

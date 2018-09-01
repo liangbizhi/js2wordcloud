@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+</head>
+<body>
+    <h1 id="shape">图片形状</h1>
+    <div id="container" style="height: 500px; width: 500px;"></div>
+    <div class="reality">
+        <p>Then shape that you are seeing is below:</p>
+        <img src="./shape/twitter.png">
+    </div>
+    <script src="dist/js2wordcloud.js"></script>
+    <script>
+        var words = []
+        for (var i = 0; i < 100; i++) {
+            words.push(['蛤蛤', 10])
+        }
+        for (var i = 0; i < 100; i++) {
+            words.push(['记者', 10])
+        }
+        var option = {
+            tooltip: {
+                show: true,
+                formatter: function(item) {
+                    return item[0] + ': 跑得比较快' + item[1] + 'km/h<br>' + '词云图'
+                }
+            },
+            list: words,
+            color: '#15a4fa',
+            imageShape: './shape/twitter.png',
+            ellipticity: 1
+        }
+        var wc = new Js2WordCloud(document.getElementById('container'))
+        wc.showLoading({
+            backgroundColor: '#fff',
+            text: '正在加载报道...',
+            effect: 'spin'
+        })
+        setTimeout(function() {
+            wc.hideLoading()
+            wc.setOption(option)
+        }, 2000)
+    </script>
+</body>
+</html>
