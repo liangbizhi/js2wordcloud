@@ -6,6 +6,8 @@
 
 [![NPM](https://nodei.co/npm/js2wordcloud.png)](https://nodei.co/npm/js2wordcloud/)
 
+![js2wordcloud](./shape/sample.png)
+
 JavaScript生成词云图。基于[wordcloud2.js](https://github.com/timdream/wordcloud2.js)
 
 由于Baidu Echarts 2的词云图在设置值较小、值相同的词语时，会出现字符重叠的问题；而又在不能使用Ecahrts 3的情况下……
