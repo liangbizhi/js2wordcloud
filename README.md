@@ -40,6 +40,7 @@ wc.setOption({
 ```
 
 一般用法请看`index.html`。点击[demo](http://liangbizhi.github.io/js2wordcloud)
+
 图片形状用法请看`index-shape.html`。点击[demo](http://liangbizhi.github.io/js2wordcloud/index-shape.html)
 
 ## Features
